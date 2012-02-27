@@ -25,7 +25,7 @@ class sql4array
 {
 	/**
 	 * Init
-	 **/
+	 */
 	private $query				= FALSE;
 	private $parse_query		= FALSE;
 	private $parse_query_lower	= FALSE;
@@ -40,7 +40,7 @@ class sql4array
 
 	/**
 	 * Query function
-	 **/
+	 */
 	public function query($query)
 	{
 		$this->destroy();
@@ -59,7 +59,7 @@ class sql4array
 
 	/**
 	 * Destroy current values
-	 **/
+	 */
 	private function destroy()
 	{
 		$this->query				= FALSE;
@@ -77,7 +77,7 @@ class sql4array
 
 	/**
 	 * Parse SQL query
-	 **/
+	 */
 	private function parse_query()
 	{
 		$this->parse_query 			= preg_replace('#ORDER(\s){2,}BY(\s+)(.*)(\s+)(ASC|DESC)#i', 'ORDER BY \\3 \\5', $this->query);
@@ -88,7 +88,7 @@ class sql4array
 
 	/**
 	 * Parse SQL select parameters
-	 **/
+	 */
 	private function parse_select()
 	{
 		$key = array_search("distinct", $this->parse_query_lower);
@@ -107,7 +107,7 @@ class sql4array
 
 	/**
 	 * Parse again SQL select parameters with as keyword
-	 **/
+	 */
 	private function parse_select_as()
 	{
 		foreach ($this->parse_select as $select)
@@ -126,7 +126,7 @@ class sql4array
 
 	/**
 	 * Parse SQL from parameters
-	 **/
+	 */
 	private function parse_from()
 	{
 		$key	= array_search("from", $this->parse_query_lower);
@@ -139,7 +139,7 @@ class sql4array
 
 	/**
 	 * Parse again SQL from parameters with as keyword
-	 **/
+	 */
 	private function parse_from_as()
 	{
 		foreach ($this->parse_from as $from)
@@ -165,7 +165,7 @@ class sql4array
 
 	/**
 	 * Parse SQL where parameters
-	 **/
+	 */
 	private function parse_where()
 	{
 		$key	= array_search("where", $this->parse_query_lower);
@@ -181,7 +181,7 @@ class sql4array
 
 		/**
 		 * SQL Functions
-		 **/
+		 */
 		$patterns[]		= '#LOWER\((.*)\)#ie';
 		$patterns[]		= '#UPPER\((.*)\)#ie';
 		$patterns[]		= '#TRIM\((.*)\)#ie';
@@ -192,7 +192,7 @@ class sql4array
 
 		/**
 		 * Basics SQL operators
-		 **/
+		 */
 		$patterns[]		= '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(=|IS)(\s)+([[:digit:]]+)(\s)*#ie';
 		$patterns[]		= '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(=|IS)(\s)+(\'|\")(.*)(\'|\")(\s)*#ie';
 		$patterns[]		= '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(>|<)(\s)+([[:digit:]]+)(\s)*#ie';
@@ -213,7 +213,7 @@ class sql4array
 
 		/**
 		 * match SQL operators
-		 **/
+		 */
 		$ereg = array('%' => '(.*)', '_' => '(.)');
 
 		$patterns[] 	= '#([a-zA-Z0-9\.]+)(\s)+LIKE(\s)*(\'|\")(.*)(\'|\")#ie';
@@ -246,7 +246,7 @@ class sql4array
 
 	/**
 	 * Format IN parameters for PHP
-	 **/
+	 */
 	private function parse_in($string)
 	{
 		$array	= explode(',', $string);
@@ -257,7 +257,7 @@ class sql4array
 
 	/**
 	 * Execute query
-	 **/
+	 */
 	private function exec_query()
 	{
 		$klimit		= array_search("limit", $this->parse_query_lower);
@@ -322,7 +322,7 @@ class sql4array
 
 	/**
 	 * Parse SQL order by parameters
-	 **/
+	 */
 	private function parse_order()
 	{
 		$key	= array_search("order by", $this->parse_query_lower);
@@ -353,7 +353,7 @@ class sql4array
 
 	/**
 	 * Return response
-	 **/
+	 */
 	private function return_response()
 	{
 		return $this->response;
@@ -361,7 +361,7 @@ class sql4array
 
 	/**
 	 * Return a column of an array
-	 **/
+	 */
 	private function split_array($input_array, $column)
 	{
 		$output_array	= array();
@@ -374,7 +374,7 @@ class sql4array
 
 	/**
 	 * Entire array search
-	 **/
+	 */
 	private function entire_array_search($needle, $array)
 	{
 		foreach($array as $key => $value)
