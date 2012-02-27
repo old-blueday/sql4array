@@ -58,9 +58,8 @@ class sql4array
 		$this
 			->destroy()
 			->createFromGlobals(false)
+			->cacheQuery(true)
 		;
-
-		$this->attr['cacheQuery'] = true;
 	}
 
 	/**
@@ -142,9 +141,11 @@ class sql4array
 	/**
 	 * @return bool
 	 */
-	public function cacheQuery($val = true)
+	public function cacheQuery($val = true, $clear = false)
 	{
 		$this->attr['cacheQuery'] = $val;
+
+		if ($clear) $this->cache_query = array();
 
 		return $this;
 	}
