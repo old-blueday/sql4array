@@ -132,6 +132,8 @@ class sql4array
 		$this->response = array();
 
 		$this->temp = array();
+
+		return $this;
 	}
 
 	/**
@@ -143,6 +145,8 @@ class sql4array
 		$this->parse_query = preg_split('#(SELECT|DISTINCT|FROM|JOIN|WHERE|ORDER(\s+)BY|LIMIT|OFFSET)+#i', $this->parse_query, -1, PREG_SPLIT_DELIM_CAPTURE);
 		$this->parse_query = array_map('trim', $this->parse_query);
 		$this->parse_query_lower = array_map('strtolower', $this->parse_query);
+
+		return $this;
 	}
 
 	/**
@@ -159,6 +163,8 @@ class sql4array
 		$arrays = preg_split('#((\s)*,(\s)*)#i', $string, -1, PREG_SPLIT_NO_EMPTY);
 
 		foreach ($arrays as $array) $this->parse_select[] = $array;
+
+		return $this;
 	}
 
 	/**
@@ -178,6 +184,8 @@ class sql4array
 				$this->parse_select_as[$select] = $select;
 			}
 		}
+
+		return $this;
 	}
 
 	/**
@@ -190,6 +198,8 @@ class sql4array
 		$arrays = preg_split('#((\s)*,(\s)*)#i', $string, -1, PREG_SPLIT_NO_EMPTY);
 
 		foreach ($arrays as $array) $this->parse_from[] = $array;
+
+		return $this;
 	}
 
 	/**
@@ -220,6 +230,8 @@ class sql4array
 				$this->tables[$arrays[1]] = $this->table($table);
 			}
 		}
+
+		return $this;
 	}
 
 	/**
@@ -284,6 +296,8 @@ class sql4array
 		$replacements[] = "'!eregi(\"'.strtr(\"\\5\", \$ereg).'\", '.\$this->parse_where_key(\"\\1\").')'";
 
 		$this->parse_where = "return " . stripslashes(trim(preg_replace($patterns, $replacements, $string))) . ";";
+
+		return $this;
 	}
 
 	/*
@@ -366,6 +380,8 @@ class sql4array
 				$irow++;
 			}
 		}
+
+		return $this;
 	}
 
 	/**
@@ -395,6 +411,8 @@ class sql4array
 		$multisort .= "\$this->response);";
 
 		eval($multisort);
+
+		return $this;
 	}
 
 	/**
