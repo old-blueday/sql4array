@@ -138,9 +138,6 @@ class sql4array
 		return $this->return_response();
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function cacheQuery($val = true, $clear = false)
 	{
 		$this->attr['cacheQuery'] = $val;
