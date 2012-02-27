@@ -115,7 +115,7 @@ class sql4array
 		$this->destroy();
 		$this->query = $query;
 
-		if (!$this->cacheQuery($this->query))
+		if (!$this->cacheQueryGet($this->query))
 		{
 
 			$this
@@ -142,9 +142,11 @@ class sql4array
 	/**
 	 * @return bool
 	 */
-	protected function cacheQuery($query)
+	protected function cacheQuery($val = true)
 	{
-		return ($this->attr['cacheQuery'] && $this->cacheQueryGet($query));
+		$this->attr['cacheQuery'] = $val;
+
+		return $this;
 	}
 
 	/**
@@ -155,6 +157,8 @@ class sql4array
 		$key = md5($query);
 
 		if (
+			$this->attr['cacheQuery']
+			&&
 			array_key_exists($key, $this->cache_query)
 			&& $data = $this->cache_query[$key]
 		)
