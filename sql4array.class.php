@@ -113,8 +113,6 @@ class sql4array
 			->parse_from()
 			->parse_from_as()
 			->parse_where()
-		;
-		$this
 			->exec_query()
 			->parse_order()
 		;
