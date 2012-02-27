@@ -102,6 +102,7 @@ class sql4array
 	{
 		$this->destroy();
 		$this->query = $query;
+
 		$this->parse_query();
 		$this->parse_select();
 		$this->parse_select_as();
