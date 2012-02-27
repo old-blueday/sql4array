@@ -217,7 +217,7 @@ class sql4array
 	{
 		foreach ($this->parse_from as $from)
 		{
-			if (eregi('AS', $from))
+			if (preg_match('#as#i', $from))
 			{
 				$arrays = preg_split('#((\s)+AS(\s)+)#i', $from, -1, PREG_SPLIT_NO_EMPTY);
 
