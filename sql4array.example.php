@@ -14,6 +14,7 @@ header("Content-type: text");
 
 require "./sql4array.class.php";
 
+$array = array();
 
 for ($i = 0; $i < 20; $i++)
 {
