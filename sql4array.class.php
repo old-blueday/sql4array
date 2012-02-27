@@ -182,7 +182,7 @@ class sql4array
 	{
 		foreach ($this->parse_select as $select)
 		{
-			if (eregi('as', $select))
+			if (preg_match('#as#i', $select))
 			{
 				$arrays = preg_split('#((\s)+AS(\s)+)#i', $select, -1, PREG_SPLIT_NO_EMPTY);
 				$this->parse_select_as[$arrays[1]] = $arrays[0];
