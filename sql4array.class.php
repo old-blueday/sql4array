@@ -1,6 +1,6 @@
 <?PHP
 
-/*
+/**
  * Project:		Absynthe sql4array
  * File:		sql4array.class.php5
  * Author:		Absynthe <sylvain@abstraction.fr>
@@ -10,7 +10,7 @@
  * License:		LGPL
  */
 
-/*
+/**
  * Parameters available :
  * SELECT, DISTINCT, FROM, WHERE, ORDER BY, LIMIT, OFFSET
  *
@@ -368,10 +368,10 @@ class sql4array
 
 		foreach ($input_array as $key => $value)
 			$output_array[] = $value[$column];
-		
+
 		return $output_array;
 	}
-	
+
 	/**
 	 * Entire array search
 	 **/
@@ -380,10 +380,10 @@ class sql4array
 		foreach($array as $key => $value)
 			if ($value === $needle)
 				$return[] = $key;
-				
+
 		if (!is_array($return))
 			$return = FALSE;
-				
+
 		return $return;
 	}
 }
