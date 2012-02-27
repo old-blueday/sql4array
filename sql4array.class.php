@@ -227,7 +227,9 @@ class sql4array
 			}
 
 			$this->parse_from_as[$from] = $table;
+			/*
 			$this->tables[$from] = $this->table($table);
+			*/
 		}
 
 		return $this;
