@@ -35,7 +35,7 @@ foreach(array(
 	"SELECT id, foo FROM array as arr WHERE id > 10",
 	"SELECT id AS i, foo AS f FROM array WHERE i > 10",
 	"SELECT id AS i, foo AS f FROM array WHERE i > 10 AND f LIKE '%a%'",
-	"SELECT id AS iiiiii, foo AS fooooooooo FROM array WHERE iiiiii != 10",
+	"SELECT id AS iiiiii, foo AS fooooooooo FROM array WHERE array.iiiiii != 10",
 ) as $sqlstring)
 {
 
