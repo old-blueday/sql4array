@@ -336,6 +336,8 @@ class sql4array
 
 	/**
 	 * Format IN parameters for PHP
+	 *
+	 * @return string
 	 */
 	protected function parse_in($string)
 	{
