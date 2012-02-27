@@ -53,6 +53,12 @@ class sql4array
 	 */
 	protected $globals = array();
 
+	/**
+	 * set tables get from where
+	 * and this func will reset $this->globals
+	 *
+	 * @return sql4array
+	 */
 	public function createFromGlobals($disable = false)
 	{
 		$this->attr['createFromGlobals'] = !$disable;
