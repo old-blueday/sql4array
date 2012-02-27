@@ -316,8 +316,11 @@ class sql4array
 		return $this;
 	}
 
-	/*
-	-------------------------------------------- */
+	/**
+	 * return '$row[$this->parse_select_as[' . $key . ']]';
+	 *
+	 * @return string
+	 */
 	protected function parse_where_key($key)
 	{
 		if (ereg('\.', $key))
