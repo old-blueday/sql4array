@@ -43,6 +43,11 @@ class sql4array
 	 */
 	protected $var = array();
 
+	/**
+	 * sql4array temp
+	 */
+	protected $temp = array();
+
 	public function createFromGlobals($disable = false)
 	{
 		$this->attr['createFromGlobals'] = !$disable;
