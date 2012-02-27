@@ -10,7 +10,7 @@
  * License:		LGPL
  */
 
-header("Content-type: text");
+//header("Content-type: text");
 
 require "./sql4array.class.php";
 
@@ -27,16 +27,33 @@ $sql = new sql4array();
 
 $sql->createFromGlobals();
 
-$a = $sql->query("SELECT id, foo FROM array");
-$b = $sql->query("SELECT id, foo FROM array WHERE id > 10");
-$c = $sql->query("SELECT id AS i, foo AS f FROM array WHERE i > 10");
-$d = $sql->query("SELECT id AS i, foo AS f FROM array WHERE i > 10 AND f LIKE '%a%'");
-$e = $sql->query("SELECT id AS iiiiii, foo AS fooooooooo FROM array WHERE iiiiii != 10");
+$r = array();
 
-var_dump($a);
-var_dump($b);
-var_dump($c);
-var_dump($d);
-var_dump($e);
+foreach(array(
+	"SELECT id, foo FROM array",
+	"SELECT id, foo FROM array WHERE id > 10",
+	"SELECT id, foo FROM array as arr WHERE id > 10",
+	"SELECT id AS i, foo AS f FROM array WHERE i > 10",
+	"SELECT id AS i, foo AS f FROM array WHERE i > 10 AND f LIKE '%a%'",
+	"SELECT id AS iiiiii, foo AS fooooooooo FROM array WHERE iiiiii != 10",
+) as $sqlstring)
+{
+
+	$a = $sql->query($sqlstring);
+
+	$r[] = array(
+		'sql' => $sqlstring,
+		'result' => $a,
+	);
+
+}
+
+var_dump($sql);
+
+foreach($r as $value)
+{
+	echo $value['sql']."\n";
+	var_dump($value['result']);
+}
 
 ?>
