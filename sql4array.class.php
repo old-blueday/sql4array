@@ -147,6 +147,31 @@ class sql4array
 		return $this->return_response();
 	}
 
+	protected function cacheQueryGet($query)
+	{
+		$key = md5($query);
+
+		if (
+			array_key_exists($key, $this->cache_query)
+			&& $data = $this->cache_query[$key]
+		)
+		{
+   			$this->query = $data['query'];
+   			$this->parse_query = $data['parse_query'];
+   			$this->parse_query_lower = $data['parse_query_lower'];
+   			$this->parse_select = $data['parse_select'];
+   			$this->parse_select_as = $data['parse_select_as'];
+   			$this->parse_from = $data['parse_from'];
+   			$this->parse_from_as = $data['parse_from_as'];
+   			$this->parse_where = $data['parse_where'];
+   			$this->distinct_query = $data['distinct_query'];
+
+   			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Destroy current values
 	 */
