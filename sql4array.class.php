@@ -26,17 +26,17 @@ class sql4array
 	/**
 	 * Init
 	 */
-	private $query = FALSE;
-	private $parse_query = FALSE;
-	private $parse_query_lower = FALSE;
-	private $parse_select = FALSE;
-	private $parse_select_as = FALSE;
-	private $parse_from = FALSE;
-	private $parse_from_as = FALSE;
-	private $parse_where = FALSE;
-	private $distinct_query = FALSE;
-	private $tables = array();
-	private $response = array();
+	protected $query = FALSE;
+	protected $parse_query = FALSE;
+	protected $parse_query_lower = FALSE;
+	protected $parse_select = FALSE;
+	protected $parse_select_as = FALSE;
+	protected $parse_from = FALSE;
+	protected $parse_from_as = FALSE;
+	protected $parse_where = FALSE;
+	protected $distinct_query = FALSE;
+	protected $tables = array();
+	protected $response = array();
 
 	/**
 	 * sql4array setting
@@ -112,7 +112,7 @@ class sql4array
 	/**
 	 * Destroy current values
 	 */
-	private function destroy()
+	protected function destroy()
 	{
 		$this->query = FALSE;
 		$this->parse_query = FALSE;
@@ -132,7 +132,7 @@ class sql4array
 	/**
 	 * Parse SQL query
 	 */
-	private function parse_query()
+	protected function parse_query()
 	{
 		$this->parse_query = preg_replace('#ORDER(\s){2,}BY(\s+)(.*)(\s+)(ASC|DESC)#i', 'ORDER BY \\3 \\5', $this->query);
 		$this->parse_query = preg_split('#(SELECT|DISTINCT|FROM|JOIN|WHERE|ORDER(\s+)BY|LIMIT|OFFSET)+#i', $this->parse_query, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -143,7 +143,7 @@ class sql4array
 	/**
 	 * Parse SQL select parameters
 	 */
-	private function parse_select()
+	protected function parse_select()
 	{
 		$key = array_search("distinct", $this->parse_query_lower);
 
@@ -159,7 +159,7 @@ class sql4array
 	/**
 	 * Parse again SQL select parameters with as keyword
 	 */
-	private function parse_select_as()
+	protected function parse_select_as()
 	{
 		foreach ($this->parse_select as $select)
 		{
@@ -178,7 +178,7 @@ class sql4array
 	/**
 	 * Parse SQL from parameters
 	 */
-	private function parse_from()
+	protected function parse_from()
 	{
 		$key = array_search("from", $this->parse_query_lower);
 		$string = $this->parse_query[$key + 1];
@@ -190,7 +190,7 @@ class sql4array
 	/**
 	 * Parse again SQL from parameters with as keyword
 	 */
-	private function parse_from_as()
+	protected function parse_from_as()
 	{
 		foreach ($this->parse_from as $from)
 		{
@@ -220,7 +220,7 @@ class sql4array
 	/**
 	 * Parse SQL where parameters
 	 */
-	private function parse_where()
+	protected function parse_where()
 	{
 		$key = array_search("where", $this->parse_query_lower);
 
@@ -283,7 +283,7 @@ class sql4array
 
 	/*
 	-------------------------------------------- */
-	private function parse_where_key($key)
+	protected function parse_where_key($key)
 	{
 		if (ereg('\.', $key))
 		{
@@ -299,7 +299,7 @@ class sql4array
 	/**
 	 * Format IN parameters for PHP
 	 */
-	private function parse_in($string)
+	protected function parse_in($string)
 	{
 		$array = explode(',', $string);
 		$array = array_map('trim', $array);
@@ -310,7 +310,7 @@ class sql4array
 	/**
 	 * Execute query
 	 */
-	private function exec_query()
+	protected function exec_query()
 	{
 		$klimit = array_search("limit", $this->parse_query_lower);
 		$koffset = array_search("offset", $this->parse_query_lower);
@@ -366,7 +366,7 @@ class sql4array
 	/**
 	 * Parse SQL order by parameters
 	 */
-	private function parse_order()
+	protected function parse_order()
 	{
 		$key = array_search("order by", $this->parse_query_lower);
 
@@ -395,7 +395,7 @@ class sql4array
 	/**
 	 * Return response
 	 */
-	private function return_response()
+	protected function return_response()
 	{
 		return $this->response;
 	}
@@ -403,7 +403,7 @@ class sql4array
 	/**
 	 * Return a column of an array
 	 */
-	private function split_array($input_array, $column)
+	protected function split_array($input_array, $column)
 	{
 		$output_array = array();
 
@@ -415,7 +415,7 @@ class sql4array
 	/**
 	 * Entire array search
 	 */
-	private function entire_array_search($needle, $array)
+	protected function entire_array_search($needle, $array)
 	{
 		foreach ($array as $key => $value)
 			if ($value === $needle) $return[] = $key;
