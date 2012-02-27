@@ -72,17 +72,17 @@ class sql4array
 	/**
 	 * @return array
 	 */
-	function table()
+	function table($table)
 	{
-		$this->temp['table'] = func_get_arg(0);
+		$table = func_get_arg(0);
 
 		if ($this->attr['createFromGlobals'])
 		{
-			return (array)$GLOBALS[$this->temp['table']];
+			return (array)$GLOBALS[$table];
 		}
 		else
 		{
-			return (array)$this->globals[$this->temp['table']];
+			return (array)$this->globals[$table];
 		}
 	}
 
