@@ -120,12 +120,7 @@ class sql4array
 		$this->destroy();
 		$this->query = $query;
 
-		if ($this->attr['cacheQuery'])
-		{
-			$_skip = $this->cacheQueryGet($this->query);
-		}
-
-		if (!$_skip)
+		if (!$this->cacheQuery($this->query))
 		{
 
 			$this
@@ -147,6 +142,11 @@ class sql4array
 		;
 
 		return $this->return_response();
+	}
+
+	protected function cacheQuery($query)
+	{
+		return ($this->attr['cacheQuery'] && $this->cacheQueryGet($query));
 	}
 
 	protected function cacheQueryGet($query)
