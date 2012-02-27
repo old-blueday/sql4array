@@ -342,10 +342,10 @@ class sql4array
 		$irow = 0;
 		$distinct = array();
 
-		foreach ($this->parse_from_as as $table_name)
+		foreach ($this->parse_from_as as $from_name => $table_name)
 		{
 
-			$table = $this->tables[$table_name] = $this->table($table_name);
+			$table = $this->tables[$from_name] = $this->table($table_name);
 
 			foreach ($table as $row)
 			{
