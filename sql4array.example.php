@@ -32,6 +32,9 @@ $r = array();
 foreach(array(
 	"SELECT id, foo FROM array",
 	"SELECT id, foo FROM array WHERE id > 10",
+
+	"SELECT id, foo FROM array WHERE id > 10",
+
 	"SELECT id, foo FROM array as arr WHERE id > 10",
 	"SELECT id AS i, foo AS f FROM array WHERE i > 10",
 	"SELECT id AS i, foo AS f FROM array WHERE i > 10 AND f LIKE '%a%'",
