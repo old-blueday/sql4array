@@ -74,8 +74,6 @@ class sql4array
 	 */
 	function table($table)
 	{
-		$table = func_get_arg(0);
-
 		if ($this->attr['createFromGlobals'])
 		{
 			return (array)$GLOBALS[$table];
