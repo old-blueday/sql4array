@@ -345,7 +345,7 @@ class sql4array
 		foreach ($this->parse_from_as as $table_name)
 		{
 
-			$table = $this->table($table_name);
+			$table = $this->tables[$table_name] = $this->table($table_name);
 
 			foreach ($table as $row)
 			{
