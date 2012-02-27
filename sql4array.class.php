@@ -118,6 +118,14 @@ class sql4array
 		$this->destroy();
 		$this->query = $query;
 
+		if ($this->attr['cacheQuery'])
+		{
+			$_skip = $this->cacheQueryGet($this->query);
+		}
+
+		if (!$_skip)
+		{
+
 		$this
 			->parse_query()
 			->parse_select()
@@ -126,6 +134,8 @@ class sql4array
 			->parse_from_as()
 			->parse_where()
 		;
+
+		}
 
 		$this
 			->exec_query()
