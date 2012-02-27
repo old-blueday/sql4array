@@ -340,8 +340,11 @@ class sql4array
 		$irow = 0;
 		$distinct = array();
 
-		foreach ($this->tables as $table)
+		foreach ($this->parse_from_as as $table_name)
 		{
+
+			$table = $this->table($table_name);
+
 			foreach ($table as $row)
 			{
 				// Offset
