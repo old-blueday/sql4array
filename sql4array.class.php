@@ -56,6 +56,8 @@ class sql4array
 	 */
 	protected $globals = array();
 
+	protected $cache_query = array();
+
 	public function __construct()
 	{
 		$this
