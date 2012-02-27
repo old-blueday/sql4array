@@ -44,7 +44,7 @@ class sql4array
 	/**
 	 * sql4array setting
 	 */
-	protected $var = array();
+	protected $attr = array();
 
 	/**
 	 * sql4array temp
