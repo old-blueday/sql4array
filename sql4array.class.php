@@ -110,6 +110,8 @@ class sql4array
 			->parse_from()
 			->parse_from_as()
 			->parse_where()
+		;
+		$this
 			->exec_query()
 			->parse_order()
 		;
@@ -230,7 +232,7 @@ class sql4array
 				global $$table;
 				*/
 				$this->parse_from_as[$from] = $table;
-				$this->tables[$arrays[1]] = $this->table($table);
+				$this->tables[$from] = $this->table($table);
 			}
 		}
 
