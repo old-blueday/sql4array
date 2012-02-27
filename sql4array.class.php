@@ -326,12 +326,10 @@ class sql4array
 		if (ereg('\.', $key))
 		{
 			list($table, $col) = explode('.', $key);
-			return '$row[$this->parse_select_as[' . $col . ']]';
+
+			$key = $col;
 		}
-		else
-		{
 			return '$row[$this->parse_select_as[' . $key . ']]';
-		}
 	}
 
 	/**
