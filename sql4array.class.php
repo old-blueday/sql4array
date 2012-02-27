@@ -245,7 +245,12 @@ class sql4array
 	{
 		$key = array_search('where', $this->parse_query_lower);
 
-		if ($key == FALSE) return $this->parse_where = 'return TRUE;';
+		if ($key == FALSE)
+		{
+			$this->parse_where = 'return TRUE;';
+
+			return $this;
+		}
 
 		$string = $this->parse_query[$key + 1];
 
