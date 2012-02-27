@@ -84,8 +84,15 @@ class sql4array
 		}
 	}
 
+	/**
+	 * set tables map
+	 *
+	 * @return sql4array
+	 */
 	function asset($key, $value) {
 		$this->globals[$key] = (array)$value;
+
+		return $this;
 	}
 
 	/**
