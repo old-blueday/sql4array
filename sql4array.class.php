@@ -100,6 +100,8 @@ class sql4array
 
 	/**
 	 * Query function
+	 *
+	 * @return array - return $this->return_response();
 	 */
 	public function query($query)
 	{
