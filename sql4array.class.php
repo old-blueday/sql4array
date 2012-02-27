@@ -329,7 +329,8 @@ class sql4array
 
 			$key = $col;
 		}
-			return '$row[$this->parse_select_as[' . $key . ']]';
+
+		return '$row[$this->parse_select_as[' . $key . ']]';
 	}
 
 	/**
