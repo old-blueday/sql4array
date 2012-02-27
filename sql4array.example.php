@@ -24,6 +24,9 @@ for ($i = 0; $i < 20; $i++)
 
 
 $sql	= new sql4array();
+
+$sql->createFromGlobals();
+
 $a		= $sql->query("SELECT id, foo FROM array");
 $b		= $sql->query("SELECT id, foo FROM array WHERE id > 10");
 $c		= $sql->query("SELECT id AS i, foo AS f FROM array WHERE i > 10");
