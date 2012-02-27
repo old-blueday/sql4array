@@ -47,11 +47,6 @@ class sql4array
 	protected $attr = array();
 
 	/**
-	 * sql4array temp
-	 */
-	protected $temp = array();
-
-	/**
 	 * sql4array tables map
 	 */
 	protected $globals = array();
@@ -217,8 +212,6 @@ class sql4array
 		$this->distinct_query = FALSE;
 		$this->tables = array();
 		$this->response = array();
-
-		$this->temp = array();
 
 		return $this;
 	}
