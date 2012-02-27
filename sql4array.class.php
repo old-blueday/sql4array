@@ -323,7 +323,7 @@ class sql4array
 	 */
 	protected function parse_where_key($key)
 	{
-		if (ereg('\.', $key))
+		if (preg_match('#\.#', $key))
 		{
 			list($table, $col) = explode('.', $key);
 
