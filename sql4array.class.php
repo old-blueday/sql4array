@@ -39,6 +39,18 @@ class sql4array
 	private $response = array();
 
 	/**
+	 * sql4array setting
+	 */
+	protected $var = array();
+
+	public function createFromGlobals($disable = false)
+	{
+		$this->attr['createFromGlobals'] = !$disable;
+
+		return $this;
+	}
+
+	/**
 	 * Query function
 	 */
 	public function query($query)
