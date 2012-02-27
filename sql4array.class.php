@@ -106,6 +106,8 @@ class sql4array
 		$this->distinct_query = FALSE;
 		$this->tables = array();
 		$this->response = array();
+
+		$this->temp = array();
 	}
 
 	/**
