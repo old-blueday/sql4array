@@ -1,6 +1,6 @@
 <?PHP
 
-/*
+/**
  * Project:		Absynthe sql4array
  * File:		sql4array.class.php5
  * Author:		Absynthe <sylvain@abstraction.fr>
@@ -10,7 +10,7 @@
  * License:		LGPL
  */
 
-/*
+/**
  * Parameters available :
  * SELECT, DISTINCT, FROM, WHERE, ORDER BY, LIMIT, OFFSET
  *
@@ -25,22 +25,22 @@ class sql4array
 {
 	/**
 	 * Init
-	 **/
-	private $query				= FALSE;
-	private $parse_query		= FALSE;
-	private $parse_query_lower	= FALSE;
-	private $parse_select		= FALSE;
-	private $parse_select_as	= FALSE;
-	private $parse_from			= FALSE;
-	private $parse_from_as		= FALSE;
-	private $parse_where		= FALSE;
-	private $distinct_query		= FALSE;
-	private $tables				= array();
-	private $response			= array();
+	 */
+	private $query = FALSE;
+	private $parse_query = FALSE;
+	private $parse_query_lower = FALSE;
+	private $parse_select = FALSE;
+	private $parse_select_as = FALSE;
+	private $parse_from = FALSE;
+	private $parse_from_as = FALSE;
+	private $parse_where = FALSE;
+	private $distinct_query = FALSE;
+	private $tables = array();
+	private $response = array();
 
 	/**
 	 * Query function
-	 **/
+	 */
 	public function query($query)
 	{
 		$this->destroy();
@@ -59,62 +59,59 @@ class sql4array
 
 	/**
 	 * Destroy current values
-	 **/
+	 */
 	private function destroy()
 	{
-		$this->query				= FALSE;
-		$this->parse_query			= FALSE;
-		$this->parse_query_lower	= FALSE;
-		$this->parse_select			= FALSE;
-		$this->parse_select_as		= FALSE;
-		$this->parse_from			= FALSE;
-		$this->parse_from_as		= FALSE;
-		$this->parse_where			= FALSE;
-		$this->distinct_query		= FALSE;
-		$this->tables				= array();
-		$this->response				= array();
+		$this->query = FALSE;
+		$this->parse_query = FALSE;
+		$this->parse_query_lower = FALSE;
+		$this->parse_select = FALSE;
+		$this->parse_select_as = FALSE;
+		$this->parse_from = FALSE;
+		$this->parse_from_as = FALSE;
+		$this->parse_where = FALSE;
+		$this->distinct_query = FALSE;
+		$this->tables = array();
+		$this->response = array();
 	}
 
 	/**
 	 * Parse SQL query
-	 **/
+	 */
 	private function parse_query()
 	{
-		$this->parse_query 			= preg_replace('#ORDER(\s){2,}BY(\s+)(.*)(\s+)(ASC|DESC)#i', 'ORDER BY \\3 \\5', $this->query);
-		$this->parse_query 			= preg_split('#(SELECT|DISTINCT|FROM|JOIN|WHERE|ORDER(\s+)BY|LIMIT|OFFSET)+#i', $this->parse_query, -1, PREG_SPLIT_DELIM_CAPTURE);
-		$this->parse_query			= array_map('trim', $this->parse_query);
-		$this->parse_query_lower	= array_map('strtolower', $this->parse_query);
+		$this->parse_query = preg_replace('#ORDER(\s){2,}BY(\s+)(.*)(\s+)(ASC|DESC)#i', 'ORDER BY \\3 \\5', $this->query);
+		$this->parse_query = preg_split('#(SELECT|DISTINCT|FROM|JOIN|WHERE|ORDER(\s+)BY|LIMIT|OFFSET)+#i', $this->parse_query, -1, PREG_SPLIT_DELIM_CAPTURE);
+		$this->parse_query = array_map('trim', $this->parse_query);
+		$this->parse_query_lower = array_map('strtolower', $this->parse_query);
 	}
 
 	/**
 	 * Parse SQL select parameters
-	 **/
+	 */
 	private function parse_select()
 	{
 		$key = array_search("distinct", $this->parse_query_lower);
 
-		if ($key === FALSE)
-			$key = array_search("select", $this->parse_query_lower);
-		else
-			$this->distinct_query = TRUE;
+		if ($key === FALSE) $key = array_search("select", $this->parse_query_lower);
+		else  $this->distinct_query = TRUE;
 
-		$string	= $this->parse_query[$key+1];
-		$arrays	= preg_split('#((\s)*,(\s)*)#i', $string, -1, PREG_SPLIT_NO_EMPTY);
+		$string = $this->parse_query[$key + 1];
+		$arrays = preg_split('#((\s)*,(\s)*)#i', $string, -1, PREG_SPLIT_NO_EMPTY);
 
-		foreach ($arrays as $array)
-			$this->parse_select[] = $array;
+		foreach ($arrays as $array) $this->parse_select[] = $array;
 	}
 
 	/**
 	 * Parse again SQL select parameters with as keyword
-	 **/
+	 */
 	private function parse_select_as()
 	{
 		foreach ($this->parse_select as $select)
 		{
 			if (eregi('as', $select))
 			{
-				$arrays	= preg_split('#((\s)+AS(\s)+)#i', $select, -1, PREG_SPLIT_NO_EMPTY);
+				$arrays = preg_split('#((\s)+AS(\s)+)#i', $select, -1, PREG_SPLIT_NO_EMPTY);
 				$this->parse_select_as[$arrays[1]] = $arrays[0];
 			}
 			else
@@ -126,27 +123,26 @@ class sql4array
 
 	/**
 	 * Parse SQL from parameters
-	 **/
+	 */
 	private function parse_from()
 	{
-		$key	= array_search("from", $this->parse_query_lower);
-		$string	= $this->parse_query[$key+1];
-		$arrays	= preg_split('#((\s)*,(\s)*)#i', $string, -1, PREG_SPLIT_NO_EMPTY);
+		$key = array_search("from", $this->parse_query_lower);
+		$string = $this->parse_query[$key + 1];
+		$arrays = preg_split('#((\s)*,(\s)*)#i', $string, -1, PREG_SPLIT_NO_EMPTY);
 
-		foreach ($arrays as $array)
-			$this->parse_from[] = $array;
+		foreach ($arrays as $array) $this->parse_from[] = $array;
 	}
 
 	/**
 	 * Parse again SQL from parameters with as keyword
-	 **/
+	 */
 	private function parse_from_as()
 	{
 		foreach ($this->parse_from as $from)
 		{
 			if (eregi('AS', $from))
 			{
-				$arrays	= preg_split('#((\s)+AS(\s)+)#i', $from, -1, PREG_SPLIT_NO_EMPTY);
+				$arrays = preg_split('#((\s)+AS(\s)+)#i', $from, -1, PREG_SPLIT_NO_EMPTY);
 
 				$table = $arrays[0];
 				global $$table;
@@ -165,68 +161,66 @@ class sql4array
 
 	/**
 	 * Parse SQL where parameters
-	 **/
+	 */
 	private function parse_where()
 	{
-		$key	= array_search("where", $this->parse_query_lower);
+		$key = array_search("where", $this->parse_query_lower);
 
-		if ($key == FALSE)
-			return $this->parse_where = "return TRUE;";
+		if ($key == FALSE) return $this->parse_where = "return TRUE;";
 
-		$string	= $this->parse_query[$key+1];
+		$string = $this->parse_query[$key + 1];
 
-		if (trim($string) == '')
-			return $this->parse_where =  "return TRUE;";
+		if (trim($string) == '') return $this->parse_where = "return TRUE;";
 
 
 		/**
 		 * SQL Functions
-		 **/
-		$patterns[]		= '#LOWER\((.*)\)#ie';
-		$patterns[]		= '#UPPER\((.*)\)#ie';
-		$patterns[]		= '#TRIM\((.*)\)#ie';
+		 */
+		$patterns[] = '#LOWER\((.*)\)#ie';
+		$patterns[] = '#UPPER\((.*)\)#ie';
+		$patterns[] = '#TRIM\((.*)\)#ie';
 
-		$replacements[]	= "'strtolower(\\1)'";
-		$replacements[]	= "'strtoupper(\\1)'";
-		$replacements[]	= "'trim(\\1)'";
+		$replacements[] = "'strtolower(\\1)'";
+		$replacements[] = "'strtoupper(\\1)'";
+		$replacements[] = "'trim(\\1)'";
 
 		/**
 		 * Basics SQL operators
-		 **/
-		$patterns[]		= '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(=|IS)(\s)+([[:digit:]]+)(\s)*#ie';
-		$patterns[]		= '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(=|IS)(\s)+(\'|\")(.*)(\'|\")(\s)*#ie';
-		$patterns[]		= '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(>|<)(\s)+([[:digit:]]+)(\s)*#ie';
-		$patterns[]		= '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(<=|>=)(\s)+([[:digit:]]+)(\s)*#ie';
-		$patterns[]		= '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(<>|IS NOT|!=)(\s)+([[:digit:]]+)(\s)*#ie';
-		$patterns[]		= '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(<>|IS NOT|!=)(\s)+(\'|\")(.*)(\'|\")(\s)*#ie';
-		$patterns[] 	= '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(IS)?(NOT IN)(\s)+\((.*)\)#ie';
-		$patterns[] 	= '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(IS)?(IN)(\s)+\((.*)\)#ie';
+		 */
+		$patterns[] = '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(=|IS)(\s)+([[:digit:]]+)(\s)*#ie';
+		$patterns[] = '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(=|IS)(\s)+(\'|\")(.*)(\'|\")(\s)*#ie';
+		$patterns[] = '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(>|<)(\s)+([[:digit:]]+)(\s)*#ie';
+		$patterns[] = '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(<=|>=)(\s)+([[:digit:]]+)(\s)*#ie';
+		$patterns[] = '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(<>|IS NOT|!=)(\s)+([[:digit:]]+)(\s)*#ie';
+		$patterns[] = '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(<>|IS NOT|!=)(\s)+(\'|\")(.*)(\'|\")(\s)*#ie';
+		$patterns[] = '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(IS)?(NOT IN)(\s)+\((.*)\)#ie';
+		$patterns[] = '#(([a-zA-Z0-9\._]+)(\())?([a-zA-Z0-9\.]+)(\))?(\s)+(IS)?(IN)(\s)+\((.*)\)#ie';
 
-		$replacements[]	= "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 == \\9 '";
-		$replacements[]	= "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 == \"\\10\" '";
-		$replacements[]	= "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 \\7 \\9 '";
-		$replacements[]	= "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 \\7 \\9 '";
-		$replacements[]	= "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 != \\9 '";
-		$replacements[]	= "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 != \"\\10\" '";
-		$replacements[]	= "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 != ('.\$this->parse_in(\"\\10\").') '";
-		$replacements[]	= "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 == ('.\$this->parse_in(\"\\10\").') '";
+		$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 == \\9 '";
+		$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 == \"\\10\" '";
+		$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 \\7 \\9 '";
+		$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 \\7 \\9 '";
+		$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 != \\9 '";
+		$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 != \"\\10\" '";
+		$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 != ('.\$this->parse_in(\"\\10\").') '";
+		$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 == ('.\$this->parse_in(\"\\10\").') '";
 
 		/**
 		 * match SQL operators
-		 **/
+		 */
 		$ereg = array('%' => '(.*)', '_' => '(.)');
 
-		$patterns[] 	= '#([a-zA-Z0-9\.]+)(\s)+LIKE(\s)*(\'|\")(.*)(\'|\")#ie';
-		$patterns[] 	= '#([a-zA-Z0-9\.]+)(\s)+ILIKE(\s)*(\'|\")(.*)(\'|\")#ie';
-		$patterns[] 	= '#([a-zA-Z0-9\.]+)(\s)+NOT LIKE(\s)*(\'|\")(.*)(\'|\")#ie';
-		$patterns[] 	= '#([a-zA-Z0-9\.]+)(\s)+NOT ILIKE(\s)*(\'|\")(.*)(\'|\")#ie';
+		$patterns[] = '#([a-zA-Z0-9\.]+)(\s)+LIKE(\s)*(\'|\")(.*)(\'|\")#ie';
+		$patterns[] = '#([a-zA-Z0-9\.]+)(\s)+ILIKE(\s)*(\'|\")(.*)(\'|\")#ie';
+		$patterns[] = '#([a-zA-Z0-9\.]+)(\s)+NOT LIKE(\s)*(\'|\")(.*)(\'|\")#ie';
+		$patterns[] = '#([a-zA-Z0-9\.]+)(\s)+NOT ILIKE(\s)*(\'|\")(.*)(\'|\")#ie';
 
-		$replacements[]	= "'ereg(\"'.strtr(\"\\5\", \$ereg).'\", '.\$this->parse_where_key(\"\\1\").')'";
-		$replacements[]	= "'eregi(\"'.strtr(\"\\5\", \$ereg).'\", '.\$this->parse_where_key(\"\\1\").')'";
-		$replacements[]	= "'!ereg(\"'.strtr(\"\\5\", \$ereg).'\", '.\$this->parse_where_key(\"\\1\").')'";
-		$replacements[]	= "'!eregi(\"'.strtr(\"\\5\", \$ereg).'\", '.\$this->parse_where_key(\"\\1\").')'";
+		$replacements[] = "'ereg(\"'.strtr(\"\\5\", \$ereg).'\", '.\$this->parse_where_key(\"\\1\").')'";
+		$replacements[] = "'eregi(\"'.strtr(\"\\5\", \$ereg).'\", '.\$this->parse_where_key(\"\\1\").')'";
+		$replacements[] = "'!ereg(\"'.strtr(\"\\5\", \$ereg).'\", '.\$this->parse_where_key(\"\\1\").')'";
+		$replacements[] = "'!eregi(\"'.strtr(\"\\5\", \$ereg).'\", '.\$this->parse_where_key(\"\\1\").')'";
 
-		$this->parse_where = "return ".stripslashes(trim(preg_replace($patterns, $replacements, $string))).";";
+		$this->parse_where = "return " . stripslashes(trim(preg_replace($patterns, $replacements, $string))) . ";";
 	}
 
 	/*
@@ -236,41 +230,39 @@ class sql4array
 		if (ereg('\.', $key))
 		{
 			list($table, $col) = explode('.', $key);
-			return '$row[$this->parse_select_as['.$col.']]';
+			return '$row[$this->parse_select_as[' . $col . ']]';
 		}
 		else
 		{
-			return '$row[$this->parse_select_as['.$key.']]';
+			return '$row[$this->parse_select_as[' . $key . ']]';
 		}
 	}
 
 	/**
 	 * Format IN parameters for PHP
-	 **/
+	 */
 	private function parse_in($string)
 	{
-		$array	= explode(',', $string);
-		$array	= array_map('trim', $array);
+		$array = explode(',', $string);
+		$array = array_map('trim', $array);
 
 		return implode(' || ', $array);
 	}
 
 	/**
 	 * Execute query
-	 **/
+	 */
 	private function exec_query()
 	{
-		$klimit		= array_search("limit", $this->parse_query_lower);
-		$koffset	= array_search("offset", $this->parse_query_lower);
+		$klimit = array_search("limit", $this->parse_query_lower);
+		$koffset = array_search("offset", $this->parse_query_lower);
 
-		if ($klimit !== FALSE)
-			$limit	= (int) $this->parse_query[$klimit+1];
+		if ($klimit !== FALSE) $limit = (int)$this->parse_query[$klimit + 1];
 
-		if ($koffset !== FALSE)
-			$offset	= (int) $this->parse_query[$koffset+1];
+		if ($koffset !== FALSE) $offset = (int)$this->parse_query[$koffset + 1];
 
-		$irow		= 0;
-		$distinct	= array();
+		$irow = 0;
+		$distinct = array();
 
 		foreach ($this->tables as $table)
 		{
@@ -287,32 +279,25 @@ class sql4array
 				{
 					if ($this->parse_select_as[0] == '*')
 					{
-						foreach (array_keys($row) as $key)
-							$temp[$key] = $row[$key];
+						foreach (array_keys($row) as $key) $temp[$key] = $row[$key];
 
-						if ($this->distinct_query && in_array($temp, $distinct))
-							continue;
-						else
-							$this->response[] = $temp;
+						if ($this->distinct_query && in_array($temp, $distinct)) continue;
+						else  $this->response[] = $temp;
 
 						$distinct[] = $response;
 					}
 					else
 					{
-						foreach ($this->parse_select_as as $key => $value)
-							$temp[$key] = $row[$value];
+						foreach ($this->parse_select_as as $key => $value) $temp[$key] = $row[$value];
 
-						if ($this->distinct_query && in_array($temp, $distinct))
-							continue;
-						else
-							$this->response[] = $temp;
+						if ($this->distinct_query && in_array($temp, $distinct)) continue;
+						else  $this->response[] = $temp;
 
 						$distinct[] = $temp;
 					}
 
 					// Limit
-					if ($klimit !== FALSE && count($this->response) == $limit)
-						break;
+					if ($klimit !== FALSE && count($this->response) == $limit) break;
 				}
 
 				$irow++;
@@ -322,38 +307,36 @@ class sql4array
 
 	/**
 	 * Parse SQL order by parameters
-	 **/
+	 */
 	private function parse_order()
 	{
-		$key	= array_search("order by", $this->parse_query_lower);
+		$key = array_search("order by", $this->parse_query_lower);
 
-		if ($key === FALSE)
-			return;
+		if ($key === FALSE) return;
 
-		$string	= $this->parse_query[$key+2];
-		$arrays	= explode(',', $string);
+		$string = $this->parse_query[$key + 2];
+		$arrays = explode(',', $string);
 
-		if (!is_array($arrays))
-			$arrays[] = $string;
+		if (!is_array($arrays)) $arrays[] = $string;
 
-		$arrays	= array_map('trim', $arrays);
+		$arrays = array_map('trim', $arrays);
 
-		$multisort	= "array_multisort(";
+		$multisort = "array_multisort(";
 
 		foreach ($arrays as $array)
 		{
-			list($col, $sort)	= preg_split('#((\s)+)#', $array, -1, PREG_SPLIT_NO_EMPTY);
-			$multisort			.= "\$this->split_array(\$this->response, '$col'), SORT_".strtoupper($sort).", SORT_STRING, ";
+			list($col, $sort) = preg_split('#((\s)+)#', $array, -1, PREG_SPLIT_NO_EMPTY);
+			$multisort .= "\$this->split_array(\$this->response, '$col'), SORT_" . strtoupper($sort) . ", SORT_STRING, ";
 		}
 
-		$multisort	.= "\$this->response);";
+		$multisort .= "\$this->response);";
 
 		eval($multisort);
 	}
 
 	/**
 	 * Return response
-	 **/
+	 */
 	private function return_response()
 	{
 		return $this->response;
@@ -361,29 +344,26 @@ class sql4array
 
 	/**
 	 * Return a column of an array
-	 **/
+	 */
 	private function split_array($input_array, $column)
 	{
-		$output_array	= array();
+		$output_array = array();
 
-		foreach ($input_array as $key => $value)
-			$output_array[] = $value[$column];
-		
+		foreach ($input_array as $key => $value) $output_array[] = $value[$column];
+
 		return $output_array;
 	}
-	
+
 	/**
 	 * Entire array search
-	 **/
+	 */
 	private function entire_array_search($needle, $array)
 	{
-		foreach($array as $key => $value)
-			if ($value === $needle)
-				$return[] = $key;
-				
-		if (!is_array($return))
-			$return = FALSE;
-				
+		foreach ($array as $key => $value)
+			if ($value === $needle) $return[] = $key;
+
+		if (!is_array($return)) $return = FALSE;
+
 		return $return;
 	}
 }
