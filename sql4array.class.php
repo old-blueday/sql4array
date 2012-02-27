@@ -306,6 +306,8 @@ class sql4array
 		$patterns[] = '#([a-zA-Z0-9\.]+)(\s)+NOT LIKE(\s)*(\'|\")(.*)(\'|\")#ie';
 		$patterns[] = '#([a-zA-Z0-9\.]+)(\s)+NOT ILIKE(\s)*(\'|\")(.*)(\'|\")#ie';
 
+		// TODO: use preg to replace ereg
+
 		$replacements[] = "'ereg(\"'.strtr(\"\\5\", \$ereg).'\", '.\$this->parse_where_key(\"\\1\").')'";
 		$replacements[] = "'eregi(\"'.strtr(\"\\5\", \$ereg).'\", '.\$this->parse_where_key(\"\\1\").')'";
 		$replacements[] = "'!ereg(\"'.strtr(\"\\5\", \$ereg).'\", '.\$this->parse_where_key(\"\\1\").')'";
