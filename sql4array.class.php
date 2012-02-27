@@ -57,6 +57,9 @@ class sql4array
 	{
 		$this->attr['createFromGlobals'] = !$disable;
 
+		// reset $this->globals
+		$this->globals = array();
+
 		return $this;
 	}
 
