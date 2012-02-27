@@ -57,6 +57,8 @@ class sql4array
 
 	function table()
 	{
+		$this->temp['table'] = func_get_arg(0);
+
 		if ($this->attr['createFromGlobals'])
 		{
 
