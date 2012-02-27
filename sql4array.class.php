@@ -103,14 +103,16 @@ class sql4array
 		$this->destroy();
 		$this->query = $query;
 
-		$this->parse_query();
-		$this->parse_select();
-		$this->parse_select_as();
-		$this->parse_from();
-		$this->parse_from_as();
-		$this->parse_where();
-		$this->exec_query();
-		$this->parse_order();
+		$this
+			->parse_query()
+			->parse_select()
+			->parse_select_as()
+			->parse_from()
+			->parse_from_as()
+			->parse_where()
+			->exec_query()
+			->parse_order()
+		;
 
 		return $this->return_response();
 	}
