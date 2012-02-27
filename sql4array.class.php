@@ -50,6 +50,18 @@ class sql4array
 		return $this;
 	}
 
+	function table()
+	{
+		if ($this->attr['createFromGlobals'])
+		{
+
+		}
+		else
+		{
+
+		}
+	}
+
 	/**
 	 * Query function
 	 */
