@@ -68,7 +68,7 @@ class sql4array
 		}
 		else
 		{
-
+			return (array)$this->globals[$this->temp['table']];
 		}
 	}
 
