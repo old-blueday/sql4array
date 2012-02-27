@@ -55,6 +55,9 @@ class sql4array
 		return $this;
 	}
 
+	/**
+	 * @return array
+	 */
 	function table()
 	{
 		$this->temp['table'] = func_get_arg(0);
