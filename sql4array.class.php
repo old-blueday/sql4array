@@ -162,7 +162,7 @@ class sql4array
 	 */
 	protected function parse_select()
 	{
-		$key = array_search("distinct", $this->parse_query_lower);
+		$key = array_search('distinct', $this->parse_query_lower);
 
 		if ($key === FALSE) $key = array_search("select", $this->parse_query_lower);
 		else  $this->distinct_query = TRUE;
@@ -201,7 +201,7 @@ class sql4array
 	 */
 	protected function parse_from()
 	{
-		$key = array_search("from", $this->parse_query_lower);
+		$key = array_search('from', $this->parse_query_lower);
 		$string = $this->parse_query[$key + 1];
 		$arrays = preg_split('#((\s)*,(\s)*)#i', $string, -1, PREG_SPLIT_NO_EMPTY);
 
@@ -243,13 +243,13 @@ class sql4array
 	 */
 	protected function parse_where()
 	{
-		$key = array_search("where", $this->parse_query_lower);
+		$key = array_search('where', $this->parse_query_lower);
 
-		if ($key == FALSE) return $this->parse_where = "return TRUE;";
+		if ($key == FALSE) return $this->parse_where = 'return TRUE;';
 
 		$string = $this->parse_query[$key + 1];
 
-		if (trim($string) == '') return $this->parse_where = "return TRUE;";
+		if (trim($string) == '') return $this->parse_where = 'return TRUE;';
 
 		if (self::$cache_patterns && self::$cache_replacements)
 		{
@@ -353,8 +353,8 @@ class sql4array
 	 */
 	protected function exec_query()
 	{
-		$klimit = array_search("limit", $this->parse_query_lower);
-		$koffset = array_search("offset", $this->parse_query_lower);
+		$klimit = array_search('limit', $this->parse_query_lower);
+		$koffset = array_search('offset', $this->parse_query_lower);
 
 		if ($klimit !== FALSE) $limit = (int)$this->parse_query[$klimit + 1];
 
@@ -414,7 +414,7 @@ class sql4array
 	 */
 	protected function parse_order()
 	{
-		$key = array_search("order by", $this->parse_query_lower);
+		$key = array_search('order by', $this->parse_query_lower);
 
 		if ($key === FALSE) return;
 
@@ -425,15 +425,15 @@ class sql4array
 
 		$arrays = array_map('trim', $arrays);
 
-		$multisort = "array_multisort(";
+		$multisort = 'array_multisort(';
 
 		foreach ($arrays as $array)
 		{
 			list($col, $sort) = preg_split('#((\s)+)#', $array, -1, PREG_SPLIT_NO_EMPTY);
-			$multisort .= "\$this->split_array(\$this->response, '$col'), SORT_" . strtoupper($sort) . ", SORT_STRING, ";
+			$multisort .= "\$this->split_array(\$this->response, '$col'), SORT_" . strtoupper($sort) . ', SORT_STRING, ';
 		}
 
-		$multisort .= "\$this->response);";
+		$multisort .= '$this->response);';
 
 		eval($multisort);
 
