@@ -172,6 +172,27 @@ class sql4array
 		return false;
 	}
 
+	protected function cacheQuerySet($query)
+	{
+		$key = md5($query);
+
+		$data = array();
+
+		$data['query'] = $this->query;
+		$data['parse_query'] = $this->parse_query;
+		$data['parse_query_lower'] = $this->parse_query_lower;
+		$data['parse_select'] = $this->parse_select;
+		$data['parse_select_as'] = $this->parse_select_as;
+		$data['parse_from'] = $this->parse_from;
+		$data['parse_from_as'] = $this->parse_from_as;
+		$data['parse_where'] = $this->parse_where;
+		$data['distinct_query'] = $this->distinct_query;
+
+		$this->cache_query[$key] = $data;
+
+		return $this;
+	}
+
 	/**
 	 * Destroy current values
 	 */
