@@ -142,7 +142,7 @@ class sql4array
 	/**
 	 * @return bool
 	 */
-	protected function cacheQuery($val = true)
+	public function cacheQuery($val = true)
 	{
 		$this->attr['cacheQuery'] = $val;
 
