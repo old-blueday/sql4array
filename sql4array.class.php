@@ -58,7 +58,10 @@ class sql4array
 
 	public function __construct()
 	{
-		$this->createFromGlobals(false);
+		$this
+			->createFromGlobals(false)
+			->destroy()
+		;
 	}
 
 	/**
