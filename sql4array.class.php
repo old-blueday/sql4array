@@ -77,6 +77,10 @@ class sql4array
 		}
 	}
 
+	function asset($key, $value) {
+		$this->globals[$key] = (array)$value;
+	}
+
 	/**
 	 * Query function
 	 */
