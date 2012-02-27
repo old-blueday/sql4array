@@ -137,6 +137,8 @@ class sql4array
 			->parse_where()
 		;
 
+			$this->cacheQuerySet($this->query);
+
 		}
 
 		$this
