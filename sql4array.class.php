@@ -38,6 +38,9 @@ class sql4array
 	protected $tables = array();
 	protected $response = array();
 
+	protected static $cache_patterns = array();
+	protected static $cache_replacements = array();
+
 	/**
 	 * sql4array setting
 	 */
@@ -248,6 +251,13 @@ class sql4array
 
 		if (trim($string) == '') return $this->parse_where = "return TRUE;";
 
+		if (self::$cache_patterns && self::$cache_replacements)
+		{
+			$patterns = self::$cache_patterns;
+			$replacements = self::$cache_replacements;
+		}
+		else
+		{
 
 		/**
 		 * SQL Functions
@@ -280,6 +290,11 @@ class sql4array
 		$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 != \"\\10\" '";
 		$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 != ('.\$this->parse_in(\"\\10\").') '";
 		$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 == ('.\$this->parse_in(\"\\10\").') '";
+
+			self::$patterns = $cache_patterns;
+			self::$replacements = $cache_replacements;
+
+		}
 
 		/**
 		 * match SQL operators
