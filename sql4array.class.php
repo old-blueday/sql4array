@@ -76,11 +76,11 @@ class sql4array
 	{
 		if ($this->attr['createFromGlobals'])
 		{
-			return (array)$GLOBALS[$table];
+			return $GLOBALS[$table];
 		}
 		else
 		{
-			return (array)$this->globals[$table];
+			return $this->globals[$table];
 		}
 	}
 
@@ -90,7 +90,7 @@ class sql4array
 	 * @return sql4array
 	 */
 	function asset($key, $value) {
-		$this->globals[$key] = (array)$value;
+		$this->globals[$key] = $value;
 
 		return $this;
 	}
