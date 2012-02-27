@@ -345,9 +345,9 @@ class sql4array
 		foreach ($this->parse_from_as as $from_name => $table_name)
 		{
 
-			$table = $this->tables[$from_name] = $this->table($table_name);
+			$this->tables[$from_name] = $this->table($table_name);
 
-			foreach ($table as $row)
+			foreach ($this->tables[$from_name] as $row)
 			{
 				// Offset
 				if ($koffset !== FALSE && $irow < $offset)
