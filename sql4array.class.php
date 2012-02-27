@@ -128,14 +128,14 @@ class sql4array
 		if (!$_skip)
 		{
 
-		$this
-			->parse_query()
-			->parse_select()
-			->parse_select_as()
-			->parse_from()
-			->parse_from_as()
-			->parse_where()
-		;
+			$this
+				->parse_query()
+				->parse_select()
+				->parse_select_as()
+				->parse_from()
+				->parse_from_as()
+				->parse_where()
+			;
 
 			$this->cacheQuerySet($this->query);
 
