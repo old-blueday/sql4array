@@ -291,8 +291,8 @@ class sql4array
 			$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 != ('.\$this->parse_in(\"\\10\").') '";
 			$replacements[] = "'\\1'.\$this->parse_where_key(\"\\4\").'\\5 == ('.\$this->parse_in(\"\\10\").') '";
 
-			self::$patterns = $cache_patterns;
-			self::$replacements = $cache_replacements;
+			self::$cache_patterns = $patterns;
+			self::$cache_replacements = $replacements;
 
 		}
 
