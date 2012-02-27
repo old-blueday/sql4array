@@ -158,7 +158,7 @@ class sql4array
 			$this->attr['cacheQuery']
 			&&
 			array_key_exists($key, $this->cache_query)
-			&& $data = $this->cache_query[$key]
+			&& $data = &$this->cache_query[$key]
 		)
 		{
    			$this->query = $data['query'];
@@ -170,6 +170,8 @@ class sql4array
    			$this->parse_from_as = $data['parse_from_as'];
    			$this->parse_where = $data['parse_where'];
    			$this->distinct_query = $data['distinct_query'];
+
+   			$data['count_used'] += 1;
 
    			return true;
 		}
