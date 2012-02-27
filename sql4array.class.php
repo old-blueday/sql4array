@@ -61,9 +61,11 @@ class sql4array
 	public function __construct()
 	{
 		$this
-			->createFromGlobals(false)
 			->destroy()
+			->createFromGlobals(false)
 		;
+
+		$this->attr['cacheQuery'] = true;
 	}
 
 	/**
