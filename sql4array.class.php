@@ -219,11 +219,12 @@ class sql4array
 				$arrays = preg_split('#((\s)+AS(\s)+)#i', $from, -1, PREG_SPLIT_NO_EMPTY);
 
 				$table = $arrays[0];
+				$from = $arrays[1];
 				/*
 				global $$table;
 				*/
-				$this->parse_from_as[$arrays[1]] = $table;
-				$this->tables[$arrays[1]] = $this->table($table);
+				$this->parse_from_as[$from] = $table;
+				$this->tables[$from] = $this->table($table);
 			}
 			else
 			{
