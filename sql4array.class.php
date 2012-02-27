@@ -61,9 +61,7 @@ class sql4array
 
 		if ($this->attr['createFromGlobals'])
 		{
-			global ${$this->temp['table']};
-
-			return ${$this->temp['table']};
+			return $GLOBALS[$this->temp['table']];
 		}
 		else
 		{
