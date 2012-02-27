@@ -48,6 +48,11 @@ class sql4array
 	 */
 	protected $temp = array();
 
+	/**
+	 * sql4array tables map
+	 */
+	protected $globals = array();
+
 	public function createFromGlobals($disable = false)
 	{
 		$this->attr['createFromGlobals'] = !$disable;
