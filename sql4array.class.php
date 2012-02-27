@@ -220,21 +220,14 @@ class sql4array
 
 				$table = $arrays[0];
 				$from = $arrays[1];
-				/*
-				global $$table;
-				*/
-				$this->parse_from_as[$from] = $table;
-				$this->tables[$from] = $this->table($table);
 			}
 			else
 			{
 				$table = $from;
-				/*
-				global $$table;
-				*/
-				$this->parse_from_as[$from] = $table;
-				$this->tables[$from] = $this->table($table);
 			}
+
+			$this->parse_from_as[$from] = $table;
+			$this->tables[$from] = $this->table($table);
 		}
 
 		return $this;
