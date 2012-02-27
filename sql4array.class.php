@@ -144,11 +144,17 @@ class sql4array
 		return $this->return_response();
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function cacheQuery($query)
 	{
 		return ($this->attr['cacheQuery'] && $this->cacheQueryGet($query));
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function cacheQueryGet($query)
 	{
 		$key = md5($query);
